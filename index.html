@@ -918,8 +918,14 @@ function applyImgs() {
   document.querySelectorAll('.img-slot-wrap').forEach(w => {
     const img = w.querySelector('.slot-photo');
     const src = images[w.dataset.slot];
-    if (src) { img.src = src; img.classList.add('loaded'); }
-    else      { img.src = ''; img.classList.remove('loaded'); }
+    if (src) {
+      img.src = src;
+      img.classList.add('loaded');
+    } else if (!img.getAttribute('src')) {
+      // Only clear if there is no default src baked into the HTML
+      img.classList.remove('loaded');
+    }
+    // Otherwise: keep the hardcoded src + loaded class from the HTML
   });
 }
 
